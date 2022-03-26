@@ -1,14 +1,32 @@
 <script setup lang="ts">
-import { reactive, toRefs } from 'vue';
+import { computed, reactive, toRefs } from 'vue';
+
+import { valdiateRegistrationNumber } from './helpers';
 import Input from '../Input.vue';
 
 const emit = defineEmits(['submit']);
 
 const state = reactive({
+  isValid: false,
   registrationNumber: '',
 });
 
-const { registrationNumber } = toRefs(state);
+const { isValid, registrationNumber } = toRefs(state);
+
+const validateInput = (value: string) => {
+  const validReg = valdiateRegistrationNumber(value);
+  isValid.value = validReg;
+
+  return validReg;
+};
+
+const className = computed(() => {
+  return {
+    'registration-input-container': true,
+    'registration-input-container--invalid':
+      registrationNumber.value && !isValid.value,
+  };
+});
 
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -18,14 +36,16 @@ const onChange = (event: Event) => {
 
 const onSubmit = ($event: SubmitEvent) => {
   $event.preventDefault();
-  // validate
+
+  // if (validateInput(registrationNumber.value)) {
   emit('submit', registrationNumber.value);
+  // }
 };
 </script>
 
 <template>
   <form @submit="onSubmit">
-    <div class="registration-input-container">
+    <div :class="className">
       <div class="country-ident">
         <img src="/uk-flag.svg" alt="" class="country-ident__flag" />
         <div class="country-ident__iso">GB</div>
@@ -44,22 +64,27 @@ const onSubmit = ($event: SubmitEvent) => {
 
 <style scoped lang="scss">
 @use 'sass:color';
-@import url('http://fonts.cdnfonts.com/css/uk-number-plate');
+@import url('//fonts.cdnfonts.com/css/uk-number-plate');
 
 $background: hsla(46, 100%, 60%, 1);
 $ident-background: hsla(217, 49%, 46%, 100);
 $color-white: hsla(0, 0%, 100%, 1);
 $color-black: hsla(0, 0%, 0%, 1);
+$color-error: hsla(0, 70%, 40%, 1);
 
 .registration-input-container {
   background-color: $background;
   border-radius: 10px;
-  border: 4px solid hsla(0, 0%, 0%, 1);
+  border: 4px solid $color-black;
   height: 95px;
   display: flex;
   overflow: hidden;
   position: relative;
   width: 500px;
+}
+
+.registration-input-container--invalid {
+  border-color: $color-error;
 }
 
 .country-ident {
