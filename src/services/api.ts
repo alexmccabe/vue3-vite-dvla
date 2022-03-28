@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { MotTestResponse } from '../types';
+
+import { results } from './helpers';
+import { Vehicle } from '../types';
 
 const endpoint = 'https://beta.check-mot.service.gov.uk';
 
@@ -16,7 +18,7 @@ const api = axios.create({
  * so extract the data param
  *
  * @param response
- * @returns MotTestResponse
+ * @returns Vehcile
  */
 function formatResponse(response: AxiosResponse) {
   return response.data;
@@ -26,23 +28,16 @@ function formatResponse(response: AxiosResponse) {
  * Get all MOT results for a given vehicle registration.
  *
  * @param registration Vehicle registration
- * @returns MotTestResponse[]
+ * @returns Vehcile[]
  */
 export async function getVehicleMotTests(
   registration: string
-): Promise<MotTestResponse[]> {
-  return axios.get(
-    'https://beta.check-mot.service.gov.uk/trade/vehicles/mot-tests?registration=VN68EYS',
-    {
-      headers: {
-        Accept: 'application/json+v6',
-        'x-api-key': 'HybH0yr4Hj3eEgybT9pkn6B7PA769YDa8kt4wKdp',
-      },
-    }
-  );
-  return api
-    .get<MotTestResponse>('/trade/vehicles/mot-tests', {
-      params: { registration },
-    })
-    .then(formatResponse);
+): Promise<Vehicle[]> {
+  return Promise.resolve(results);
+
+  // return api
+  //   .get<MotTestResponse>('/trade/vehicles/mot-tests', {
+  //     params: { registration },
+  //   })
+  //   .then(formatResponse);
 }

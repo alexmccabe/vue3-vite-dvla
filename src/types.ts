@@ -22,4 +22,26 @@ export type HTMLInputTypeAttribute =
   | 'url'
   | 'week';
 
-export interface MotTestResponse {}
+export interface MotTest {
+  completedDate: string;
+  expiryDate: string;
+  motTestNumber: string;
+  odometerResultType: string;
+  odometerUnit: string;
+  odometerValue: string;
+  rfrAndComments: unknown[];
+  testResult: string;
+}
+export interface Vehicle {
+  engineSize: string;
+  firstUsedDate: string;
+  fuelType: string;
+  make: string;
+  manufactureDate: string;
+  model: string;
+  motTests: MotTest[];
+  primaryColour: string;
+  registration: string;
+  registrationDate: string;
+  vehicleId: string;
+}

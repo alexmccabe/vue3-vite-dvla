@@ -4,10 +4,17 @@ import RegistrationInput from './RegistrationInput.vue';
 import { getVehicleMotTests } from '../../services/api';
 
 const RegistrationInputContainer = defineComponent({
+  emits: ['results'],
+
   setup(props, context) {
     const onSubmit = async (value: string) => {
-      const results = await getVehicleMotTests(value);
-      console.log(results);
+      try {
+        const results = await getVehicleMotTests(value);
+
+        context.emit('results', results);
+      } catch (error) {
+        // handle error
+      }
     };
 
     return () =>
