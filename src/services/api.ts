@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { results } from './helpers';
 import { Vehicle } from '../types';
 
-const endpoint = 'https://beta.check-mot.service.gov.uk';
+const endpoint = 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: endpoint,
@@ -33,11 +32,11 @@ function formatResponse(response: AxiosResponse) {
 export async function getVehicleMotTests(
   registration: string
 ): Promise<Vehicle[]> {
-  return Promise.resolve(results);
+  // return Promise.resolve(results);
 
-  // return api
-  //   .get<MotTestResponse>('/trade/vehicles/mot-tests', {
-  //     params: { registration },
-  //   })
-  //   .then(formatResponse);
+  return api
+    .get<Vehicle>('/mot-tests', {
+      params: { registration: registration.toUpperCase().replace(/ /g, '') },
+    })
+    .then(formatResponse);
 }
