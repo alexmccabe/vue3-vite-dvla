@@ -15,3 +15,9 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 ```
 yarn install & yarn dev
 ```
+
+### Running the Server
+
+```
+yarn api
+```
