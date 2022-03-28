@@ -34,7 +34,7 @@
 
     <hr />
 
-    <div class="heading">
+    <div class="heading" v-if="vehicle.motTests[0].expiryDate">
       <div class="sub-title">Your MOT Expires</div>
       <div class="title">{{ vehicle.motTests[0].expiryDate }}</div>
     </div>

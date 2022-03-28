@@ -1,15 +1,13 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import RegistrationInput from './components/RegistrationInput';
 import MOTResults from './components/MOTResults';
 import { Vehicle } from './types';
 
 const motResults = ref<Vehicle[]>([]);
-
-watch(motResults, console.log);
 </script>
 
 <template>

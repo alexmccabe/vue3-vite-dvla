@@ -11,7 +11,7 @@ const RegistrationInputContainer = defineComponent({
       try {
         const results = await getVehicleMotTests(value);
 
-        context.emit('results', results);
+        context.emit('results', results.data);
       } catch (error) {
         // handle error
       }
